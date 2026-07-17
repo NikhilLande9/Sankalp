@@ -308,12 +308,12 @@
     <h2>Registration <span class="mr">नोंदणी</span></h2>
     <div class="grid g3">
       <div class="field">
-        <label>Type</label>
-        <div class="radio-row">
-          <label><input type="checkbox" name="typeOPD"> OPD</label>
-          <label><input type="checkbox" name="typeIndoor"> Indoor</label>
-          <label><input type="checkbox" name="typeShavwikarn"> Shavwikarn <span class="mr">शवविकर्ण</span></label>
+        <label>OPD No. <span class="mr">/ Indoor No.</span></label>
+        <div class="grid g2" style="gap:10px;">
+          <input type="text" name="opdNo" placeholder="OPD No.">
+          <input type="text" name="indoorNo" placeholder="Indoor No.">
         </div>
+        <input type="text" name="shastrakarma" placeholder="Shastrakarma — शस्त्रकर्म (surgical procedure, if any)" style="margin-top:8px;">
       </div>
       <div class="field">
         <label>Prognosis <span class="mr">साध्य / असाध्य</span></label>
@@ -331,6 +331,7 @@
           <label><input type="radio" name="reception" value="lying"> Lying</label>
           <label><input type="radio" name="reception" value="walking"> Walking</label>
         </div>
+        <input type="text" name="receptionNote" placeholder="Duration / note, e.g. 8 hrs" style="margin-top:8px;">
       </div>
     </div>
   </div>
@@ -358,8 +359,16 @@
       </div>
       <div class="field"><label>Years Married <span class="mr">विवाह वर्ष</span></label><input type="number" name="yearsMarried"></div>
       <div class="field"><label>Total Children <span class="mr">अपत्य एकूण</span></label><input type="number" name="totalChildren"></div>
-      <div class="field"><label>Children Details <span class="mr">मुलगा/मुलगी — वय</span></label><input type="text" name="childrenDetail" placeholder="e.g. Son – 21y, Daughter – 15y"></div>
     </div>
+    <table class="fam-table" style="margin-top:12px;">
+      <thead><tr><th style="width:8%">#</th><th style="width:46%">Child (Son/Daughter — Age)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><input type="text" name="child1" placeholder="e.g. Son – 21y"></td><td><input type="text" name="child1Note"></td></tr>
+        <tr><td>2</td><td><input type="text" name="child2" placeholder="e.g. Daughter – 15y"></td><td><input type="text" name="child2Note"></td></tr>
+        <tr><td>3</td><td><input type="text" name="child3"></td><td><input type="text" name="child3Note"></td></tr>
+        <tr><td>4</td><td><input type="text" name="child4"></td><td><input type="text" name="child4Note"></td></tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- CHIEF COMPLAINTS -->
@@ -428,6 +437,7 @@
           <label><input type="radio" name="diet" value="nonveg"> Non-veg</label>
           <label><input type="radio" name="diet" value="both"> Veg &amp; Non-veg</label>
         </div>
+        <input type="text" name="dietNote" placeholder="e.g. Tea, sugar-water 2x/day, artificial sweetener 25y" style="margin-top:8px;">
       </div>
       <div class="field" style="grid-column:span 2;">
         <label>H/O Addiction <span class="mr">सुपारी/तंबाखू/धुम्रपान/मद्यपान</span></label>
@@ -449,9 +459,12 @@
         <tr><td>Father</td><td><input type="text" name="famFather"></td></tr>
         <tr><td>Sibling 1</td><td><input type="text" name="famSib1"></td></tr>
         <tr><td>Sibling 2</td><td><input type="text" name="famSib2"></td></tr>
+        <tr><td>Sibling 3</td><td><input type="text" name="famSib3"></td></tr>
+        <tr><td>Sibling 4</td><td><input type="text" name="famSib4"></td></tr>
         <tr><td>Self</td><td><input type="text" name="famSelf"></td></tr>
       </tbody>
     </table>
+    <input type="text" name="famOtherNotes" placeholder="Additional family members / notes" style="margin-top:8px;">
 
     <div class="subhead">Menstrual History <span class="mr" style="font-weight:400;">मासिक पाळी</span></div>
     <div class="grid g4">
@@ -471,6 +484,10 @@
       <div class="field"><label>Pads used / day</label><input type="text" name="padsPerDay"></div>
       <div class="field"><label>Weeks of Amenorrhea</label><input type="text" name="weeksAmenorrhea"></div>
       <div class="field"><label>Menopause Age (if applicable)</label><input type="text" name="menopauseAge"></div>
+      <div class="field"><label>Associated Pain <span class="mr">अनुषंगीन वेदना</span></label><input type="text" name="associatedPain"></div>
+      <div class="field"><label>Menstrual Disorder</label>
+        <select name="menstrualDisorder"><option value="">Select</option><option>Anartav (Amenorrhea)</option><option>Atyartav (Menorrhagia)</option><option>Shwetpradar (Leucorrhoea)</option><option>Kashtartav (Dysmenorrhea)</option><option>Rajonivrutti (Menopause)</option><option>None</option></select>
+      </div>
     </div>
 
     <div class="subhead">Obstetric History <span class="mr" style="font-weight:400;">प्रसूती इतिहास</span></div>
@@ -505,17 +522,14 @@
         <div class="field"><label>Thirst <span class="mr">तृष्णा</span></label><input type="text" name="thirst" placeholder="Low / Normal / High"></div>
       </div>
     </div>
-    <div class="grid g5">
+    <div class="grid g3">
       <div class="field"><label>Agni (Digestive Fire) <span class="mr">अग्नि</span></label>
         <select name="agni"><option value="">Select</option><option>Sama</option><option>Vishama</option><option>Teekshna</option><option>Manda</option></select>
       </div>
       <div class="field"><label>Appetite <span class="mr">भूक</span></label><input type="text" name="appetite" placeholder="Less / Normal / Good"></div>
       <div class="field"><label>Sleep <span class="mr">निद्रा</span></label>
         <select name="sleep"><option value="">Select</option><option>Alpa (Less)</option><option>Adhik (Excess)</option><option>Bhrasht (Disturbed)</option><option>Samyak (Normal)</option><option>Divaswap (Daytime sleep)</option></select>
-      </div>
-      <div class="field"><label>Associated Pain <span class="mr">अनुषंगीन वेदना</span></label><input type="text" name="associatedPain"></div>
-      <div class="field"><label>Menstrual Disorder</label>
-        <select name="menstrualDisorder"><option value="">Select</option><option>Anartav (Amenorrhea)</option><option>Atyartav (Menorrhagia)</option><option>Shwetpradar (Leucorrhoea)</option><option>Kashtartav (Dysmenorrhea)</option><option>Rajonivrutti (Menopause)</option><option>None</option></select>
+        <input type="text" name="sleepTiming" placeholder="Timing, e.g. 3–10pm" style="margin-top:8px;">
       </div>
     </div>
     <div class="grid g4" style="margin-top:12px;">
@@ -528,7 +542,6 @@
       <div class="field"><label>Voice / Awaz <span class="mr">वाणी</span></label>
         <select name="voice"><option value="">Select</option><option>Spashta (clear)</option><option>Asamyak</option><option>Vishesh</option></select>
       </div>
-      <div class="field"><label>Skin/Nail/Eye Discolouration</label><input type="text" name="skinNailEye"></div>
       <div class="field"><label>Body Temperature</label>
         <select name="bodyTemp"><option value="">Select</option><option>Sama</option><option>Ushna</option><option>Sheeta</option></select>
       </div>
@@ -550,7 +563,7 @@
         <select name="abdomen"><option value="">Select</option><option>Soft</option><option>Firm</option></select>
       </div>
       <div class="field"><label>Body Built (Dehkruti)</label><input type="text" name="dehkruti"></div>
-      <div class="field"><label>Vaishamya / Discolouration — Nail/Eye/Tongue</label><input type="text" name="vaishamya"></div>
+      <div class="field"><label>Pallor — Nail/Eye/Tongue <span class="mr">श्वेतवर्णता नख/नेत्र/जिव्हा</span></label><input type="text" name="pallor"></div>
     </div>
 
     <div class="subhead">Nadi Pariksha (Pulse) <span class="mr" style="font-weight:400;">नाडी परीक्षा</span></div>

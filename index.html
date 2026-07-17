@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ayurved Case Paper — रुग्णपत्रक</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --paper:#f7f4ee;
+    --card:#ffffff;
+    --ink:#28322e;
+    --ink-soft:#5c665f;
+    --line:#d8d2c4;
+    --accent:#7a8b6f;       /* muted sage - herbal/ayurved feel */
+    --accent-deep:#4f5f47;
+    --accent-warm:#b5713f;  /* turmeric/clay accent, used sparingly */
+    --field-bg:#fbfaf6;
+    --focus:#4f5f47;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(122,139,111,0.09) 1px, transparent 0);
+    background-size:22px 22px;
+    color:var(--ink);
+    font-family:'Segoe UI', 'Noto Sans Devanagari', Tahoma, sans-serif;
+    padding:28px 14px 60px;
+  }
+  .sheet{
+    max-width:1000px;
+    margin:0 auto;
+  }
+  .letterhead{
+    text-align:center;
+    padding:6px 0 18px;
+    border-bottom:3px double var(--accent-deep);
+    margin-bottom:22px;
+  }
+  .letterhead .om{
+    font-size:22px;
+    color:var(--accent-warm);
+    letter-spacing:2px;
+  }
+  .letterhead h1{
+    font-family:Georgia, 'Times New Roman', serif;
+    font-size:30px;
+    margin:6px 0 2px;
+    color:var(--accent-deep);
+    letter-spacing:0.5px;
+  }
+  .letterhead .sub2{
+    font-size:12.5px;
+    color:var(--accent-warm);
+    margin:2px 0 8px;
+  }
+  .letterhead .sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    letter-spacing:3px;
+    text-transform:uppercase;
+  }
+  .letterhead .meta-row{
+    display:flex;
+    justify-content:space-between;
+    max-width:420px;
+    margin:14px auto 0;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .letterhead .meta-row input{
+    border:none;
+    border-bottom:1px solid var(--line);
+    background:transparent;
+    width:110px;
+    font-size:13px;
+    text-align:center;
+    color:var(--ink);
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:22px 24px;
+    margin-bottom:18px;
+    box-shadow:0 1px 3px rgba(40,50,46,0.05);
+  }
+  .card h2{
+    font-size:14px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--accent-deep);
+    margin:0 0 4px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .card h2::before{
+    content:"";
+    width:5px;height:5px;
+    border-radius:50%;
+    background:var(--accent-warm);
+    flex:none;
+  }
+  .card h2 .mr{
+    font-size:12px;
+    color:var(--ink-soft);
+    text-transform:none;
+    letter-spacing:0;
+    font-style:italic;
+  }
+  .card .desc{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin:0 0 16px;
+  }
+
+  .grid{
+    display:grid;
+    gap:14px 18px;
+  }
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  .g5{grid-template-columns:repeat(5,1fr);}
+  @media(max-width:720px){
+    .g2,.g3,.g4,.g5{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:480px){
+    .g2,.g3,.g4,.g5{grid-template-columns:1fr;}
+  }
+
+  label{
+    display:block;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-bottom:5px;
+    font-weight:600;
+  }
+  label .mr{
+    font-weight:400;
+    color:#8b9188;
+  }
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="tel"],
+  select,
+  textarea{
+    width:100%;
+    padding:8px 10px;
+    background:var(--field-bg);
+    border:1px solid var(--line);
+    border-radius:6px;
+    font-size:13.5px;
+    color:var(--ink);
+    font-family:inherit;
+  }
+  textarea{resize:vertical;min-height:44px;}
+  input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--focus);
+    box-shadow:0 0 0 3px rgba(79,95,71,0.12);
+  }
+
+  .field{margin-bottom:2px;}
+
+  .radio-row, .check-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 16px;
+    align-items:center;
+  }
+  .radio-row label, .check-row label{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink);
+    margin-bottom:0;
+  }
+  .radio-row input, .check-row input{width:auto;accent-color:var(--accent-deep);}
+
+  .subhead{
+    font-size:12px;
+    font-weight:700;
+    color:var(--accent-deep);
+    margin:16px 0 8px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+  }
+  .subhead:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+
+  /* complaints table */
+  table.dyn{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12.5px;
+  }
+  table.dyn th{
+    text-align:left;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    padding:6px 8px;
+    border-bottom:2px solid var(--line);
+  }
+  table.dyn td{
+    padding:6px 8px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  table.dyn input{padding:6px 8px;font-size:12.5px;}
+
+  /* family history mini-table */
+  .fam-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .fam-table th{
+    text-align:left;font-size:11px;color:var(--ink-soft);
+    text-transform:uppercase;padding:6px 8px;border-bottom:2px solid var(--line);
+  }
+  .fam-table td{padding:5px 8px;border-bottom:1px solid var(--line);}
+  .fam-table input{padding:6px 8px;font-size:12.5px;}
+
+  .pulse-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+  }
+  @media(max-width:600px){.pulse-grid{grid-template-columns:1fr;}}
+
+  .footer-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    margin-top:8px;
+  }
+  button{
+    font-family:inherit;
+    font-size:13px;
+    font-weight:600;
+    padding:11px 22px;
+    border-radius:7px;
+    border:1px solid var(--accent-deep);
+    cursor:pointer;
+  }
+  .btn-primary{
+    background:var(--accent-deep);
+    color:#fff;
+  }
+  .btn-primary:hover{background:#40503a;}
+  .btn-secondary{
+    background:transparent;
+    color:var(--accent-deep);
+  }
+  .btn-secondary:hover{background:rgba(79,95,71,0.08);}
+
+  .badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;}
+  .badge-row label{
+    border:1px solid var(--line);
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    background:var(--field-bg);
+  }
+
+  .signature-block{
+    display:flex;
+    justify-content:space-between;
+    margin-top:26px;
+    padding-top:16px;
+  }
+  .signature-block div{
+    width:230px;
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .signature-block div span{
+    display:block;
+    border-top:1px solid var(--ink-soft);
+    margin-top:38px;
+    padding-top:6px;
+  }
+
+  ::placeholder{color:#a7ac9f;}
+</style>
+</head>
+<body>
+<form class="sheet" id="caseForm">
+
+  <div class="letterhead">
+    <div class="om">卐</div>
+    <h1>संकल्प मल्टीस्पेशालीटी क्लिनीक</h1>
+    <div class="sub2">(आयुर्वेद आणि होमिओपॅथी) — Sankalp Multispeciality Clinic</div>
+    <div class="sub">रुग्णपत्रक &nbsp;|&nbsp; Case Paper</div>
+    <div class="meta-row">
+      <span>Case No. <input type="text" name="caseNo" placeholder="226"></span>
+      <span>Date <input type="date" name="date"></span>
+    </div>
+  </div>
+
+  <!-- REGISTRATION -->
+  <div class="card">
+    <h2>Registration <span class="mr">नोंदणी</span></h2>
+    <div class="grid g3">
+      <div class="field">
+        <label>Type</label>
+        <div class="radio-row">
+          <label><input type="checkbox" name="typeOPD"> OPD</label>
+          <label><input type="checkbox" name="typeIndoor"> Indoor</label>
+          <label><input type="checkbox" name="typeShavwikarn"> Shavwikarn <span class="mr">शवविकर्ण</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Prognosis <span class="mr">साध्य / असाध्य</span></label>
+        <div class="radio-row">
+          <label><input type="radio" name="prognosis" value="sadhya"> Sadhya</label>
+          <label><input type="radio" name="prognosis" value="kashtasadhya"> Kashtasadhya</label>
+          <label><input type="radio" name="prognosis" value="yapya"> Yapya</label>
+          <label><input type="radio" name="prognosis" value="asadhya"> Asadhya</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Reception <span class="mr">रिसेप्शन</span></label>
+        <div class="radio-row">
+          <label><input type="radio" name="reception" value="sitting"> Sitting</label>
+          <label><input type="radio" name="reception" value="lying"> Lying</label>
+          <label><input type="radio" name="reception" value="walking"> Walking</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATIENT DETAILS -->
+  <div class="card">
+    <h2>Patient Details <span class="mr">रुग्ण माहिती</span></h2>
+    <div class="grid g4">
+      <div class="field"><label>Name <span class="mr">नांव</span></label><input type="text" name="name"></div>
+      <div class="field"><label>Age <span class="mr">वय</span></label><input type="number" name="age" min="0"></div>
+      <div class="field"><label>Sex <span class="mr">लिंग</span></label>
+        <select name="sex"><option value="">Select</option><option>F</option><option>M</option><option>Other</option></select>
+      </div>
+      <div class="field"><label>Phone No. <span class="mr">फोन नं.</span></label><input type="tel" name="phone"></div>
+
+      <div class="field"><label>Occupation <span class="mr">व्यवसाय</span></label><input type="text" name="occupation"></div>
+      <div class="field"><label>C/o (Care of) <span class="mr">काळजीवाहू</span></label><input type="text" name="careOf"></div>
+      <div class="field" style="grid-column: span 2;"><label>Address <span class="mr">पत्ता</span></label><input type="text" name="address"></div>
+    </div>
+
+    <div class="subhead">Marital / Reproductive <span class="mr" style="font-weight:400;">वैवाहिक</span></div>
+    <div class="grid g4">
+      <div class="field"><label>Marital Status <span class="mr">विवाहित/अविवाहित</span></label>
+        <select name="maritalStatus"><option value="">Select</option><option>Married</option><option>Unmarried</option></select>
+      </div>
+      <div class="field"><label>Years Married <span class="mr">विवाह वर्ष</span></label><input type="number" name="yearsMarried"></div>
+      <div class="field"><label>Total Children <span class="mr">अपत्य एकूण</span></label><input type="number" name="totalChildren"></div>
+      <div class="field"><label>Children Details <span class="mr">मुलगा/मुलगी — वय</span></label><input type="text" name="childrenDetail" placeholder="e.g. Son – 21y, Daughter – 15y"></div>
+    </div>
+  </div>
+
+  <!-- CHIEF COMPLAINTS -->
+  <div class="card">
+    <h2>Chief Complaints <span class="mr">वर्तमान वेदनावृत्त</span></h2>
+    <div class="grid g2" style="align-items:start;">
+      <div>
+        <p class="desc">Current complaints with duration <span class="mr">कालावधी</span></p>
+        <table class="dyn">
+          <thead><tr><th style="width:8%">#</th><th>Complaint</th><th style="width:32%">Duration</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><input type="text" name="complaint1"></td><td><input type="text" name="duration1"></td></tr>
+            <tr><td>2</td><td><input type="text" name="complaint2"></td><td><input type="text" name="duration2"></td></tr>
+            <tr><td>3</td><td><input type="text" name="complaint3"></td><td><input type="text" name="duration3"></td></tr>
+            <tr><td>4</td><td><input type="text" name="complaint4"></td><td><input type="text" name="duration4"></td></tr>
+            <tr><td>5</td><td><input type="text" name="complaint5"></td><td><input type="text" name="duration5"></td></tr>
+            <tr><td>6</td><td><input type="text" name="complaint6"></td><td><input type="text" name="duration6"></td></tr>
+            <tr><td>7</td><td><input type="text" name="complaint7"></td><td><input type="text" name="duration7"></td></tr>
+            <tr><td>8</td><td><input type="text" name="complaint8"></td><td><input type="text" name="duration8"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p class="desc">Past History <span class="mr">पूर्वेतिहास</span></p>
+        <table class="dyn">
+          <thead><tr><th style="width:8%">#</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><input type="text" name="pastHistory1"></td></tr>
+            <tr><td>2</td><td><input type="text" name="pastHistory2"></td></tr>
+            <tr><td>3</td><td><input type="text" name="pastHistory3"></td></tr>
+            <tr><td>4</td><td><input type="text" name="pastHistory4"></td></tr>
+          </tbody>
+        </table>
+        <p class="desc" style="margin-top:14px;">Aushadhi Vrutta — Medication Given <span class="mr">औषधी वृत्त</span></p>
+        <table class="dyn">
+          <thead><tr><th style="width:8%">#</th><th>Medicine</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><input type="text" name="medGiven1"></td></tr>
+            <tr><td>2</td><td><input type="text" name="medGiven2"></td></tr>
+            <tr><td>3</td><td><input type="text" name="medGiven3"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="card">
+    <h2>History <span class="mr">इतिहास</span></h2>
+
+    <div class="subhead">Medical / Surgical</div>
+    <div class="grid g2">
+      <div class="field"><label>K/C/O — Known Case Of</label><input type="text" name="kco" placeholder="e.g. No H/o"></div>
+      <div class="field"><label>P/M/H — Past Medical History</label><input type="text" name="pmh"></div>
+      <div class="field"><label>P/S/H — Past Surgical History</label><input type="text" name="psh" placeholder="e.g. LSCS – 2019, T.L. – 2017"></div>
+      <div class="field"><label>H/O Allergy</label><input type="text" name="allergy"></div>
+      <div class="field"><label>H/O Hypertension <span class="mr">H/o. Hypetension</span></label>
+        <div class="radio-row"><label><input type="radio" name="hoHTN" value="yes"> Yes</label><label><input type="radio" name="hoHTN" value="no"> No</label></div>
+      </div>
+      <div class="field"><label>H/O D.M. <span class="mr">मधुमेह</span></label>
+        <div class="radio-row"><label><input type="radio" name="hoDM" value="yes"> Yes</label><label><input type="radio" name="hoDM" value="no"> No</label></div>
+      </div>
+      <div class="field"><label>H/O Diet</label>
+        <div class="radio-row">
+          <label><input type="radio" name="diet" value="veg"> Veg</label>
+          <label><input type="radio" name="diet" value="nonveg"> Non-veg</label>
+          <label><input type="radio" name="diet" value="both"> Veg &amp; Non-veg</label>
+        </div>
+      </div>
+      <div class="field" style="grid-column:span 2;">
+        <label>H/O Addiction <span class="mr">सुपारी/तंबाखू/धुम्रपान/मद्यपान</span></label>
+        <div class="check-row">
+          <label><input type="checkbox" name="addBetelnut"> Betelnut (Supari)</label>
+          <label><input type="checkbox" name="addTobacco"> Tobacco (Tambakhu)</label>
+          <label><input type="checkbox" name="addSmoking"> Smoking (Dhumrapan)</label>
+          <label><input type="checkbox" name="addAlcohol"> Alcohol (Madyapan)</label>
+        </div>
+        <input type="text" name="addictionOther" placeholder="Other / details" style="margin-top:8px;">
+      </div>
+    </div>
+
+    <div class="subhead">Family History <span class="mr" style="font-weight:400;">कौटुंबिक इतिहास</span></div>
+    <table class="fam-table">
+      <thead><tr><th style="width:20%">Relation</th><th>Condition / Illness</th></tr></thead>
+      <tbody>
+        <tr><td>Mother</td><td><input type="text" name="famMother"></td></tr>
+        <tr><td>Father</td><td><input type="text" name="famFather"></td></tr>
+        <tr><td>Sibling 1</td><td><input type="text" name="famSib1"></td></tr>
+        <tr><td>Sibling 2</td><td><input type="text" name="famSib2"></td></tr>
+        <tr><td>Self</td><td><input type="text" name="famSelf"></td></tr>
+      </tbody>
+    </table>
+
+    <div class="subhead">Menstrual History <span class="mr" style="font-weight:400;">मासिक पाळी</span></div>
+    <div class="grid g4">
+      <div class="field"><label>Menarche Age <span class="mr">रजोदर्शन वय</span></label><input type="text" name="menarcheAge"></div>
+      <div class="field"><label>Cycle Length (days)</label><input type="text" name="cycleLength" placeholder="e.g. 28–30"></div>
+      <div class="field"><label>Duration of Bleeding</label><input type="text" name="bleedDuration" placeholder="e.g. 3–4 days"></div>
+      <div class="field"><label>Flow</label>
+        <select name="flow"><option value="">Select</option><option>Scanty</option><option>Medium</option><option>Heavy</option></select>
+      </div>
+      <div class="field"><label>Regularity</label>
+        <select name="regularity"><option value="">Select</option><option>Regular</option><option>Irregular</option></select>
+      </div>
+      <div class="field"><label>Pain (Dysmenorrhea)</label>
+        <div class="radio-row"><label><input type="radio" name="menstrualPain" value="present"> Present</label><label><input type="radio" name="menstrualPain" value="absent"> Absent</label></div>
+      </div>
+      <div class="field"><label>LMP <span class="mr">last menstrual period</span></label><input type="date" name="lmp"></div>
+      <div class="field"><label>Pads used / day</label><input type="text" name="padsPerDay"></div>
+      <div class="field"><label>Weeks of Amenorrhea</label><input type="text" name="weeksAmenorrhea"></div>
+      <div class="field"><label>Menopause Age (if applicable)</label><input type="text" name="menopauseAge"></div>
+    </div>
+
+    <div class="subhead">Obstetric History <span class="mr" style="font-weight:400;">प्रसूती इतिहास</span></div>
+    <div class="grid g4">
+      <div class="field"><label>Live Births</label><input type="text" name="liveBirths"></div>
+      <div class="field"><label>Miscarriage <span class="mr">गर्भपात</span></label><input type="text" name="miscarriage" placeholder="e.g. 2 months"></div>
+      <div class="field"><label>Abortion</label><input type="text" name="abortion" placeholder="e.g. 2 months"></div>
+      <div class="field"><label>Mode of Delivery</label><input type="text" name="deliveryMode" placeholder="Normal / LSCS"></div>
+    </div>
+
+    <div class="subhead">Systemic Review <span class="mr" style="font-weight:400;">प्रकृति परीक्षा</span></div>
+    <div class="field" style="margin-bottom:14px;">
+      <label>Bowel — Purish <span class="mr">पुरिष सम्यक/मलबद्धता/विबंध/द्रवमल</span></label>
+      <div class="radio-row">
+        <label><input type="radio" name="bowel" value="samyak"> Samyak (Normal)</label>
+        <label><input type="radio" name="bowel" value="malabaddhata"> Malabaddhata (Constipated)</label>
+        <label><input type="radio" name="bowel" value="vibandh"> Vibandh (Obstructed)</label>
+        <label><input type="radio" name="bowel" value="dravmal"> Dravmal (Loose)</label>
+      </div>
+    </div>
+    <div class="field" style="margin-bottom:14px;">
+      <label>Bladder — Mutra <span class="mr">मुत्र रात्री/अत्यंधुपान/तृष्णा/सम्मक</span></label>
+      <div class="radio-row">
+        <label><input type="radio" name="bladder" value="nocturia"> Ratri (Nocturia)</label>
+        <label><input type="radio" name="bladder" value="atyanudhupan"> Atyanudhupan (Excess)</label>
+        <label><input type="radio" name="bladder" value="trushna"> Trushna (Urgency)</label>
+        <label><input type="radio" name="bladder" value="sammak"> Sammak (Normal)</label>
+      </div>
+      <div class="grid g3" style="margin-top:10px;">
+        <div class="field"><label>Frequency — Time <span class="mr">वेळ</span></label><input type="text" name="urineTime"></div>
+        <div class="field"><label>Frequency — Per Day <span class="mr">दिवस</span></label><input type="text" name="urineDay"></div>
+        <div class="field"><label>Thirst <span class="mr">तृष्णा</span></label><input type="text" name="thirst" placeholder="Low / Normal / High"></div>
+      </div>
+    </div>
+    <div class="grid g5">
+      <div class="field"><label>Agni (Digestive Fire) <span class="mr">अग्नि</span></label>
+        <select name="agni"><option value="">Select</option><option>Sama</option><option>Vishama</option><option>Teekshna</option><option>Manda</option></select>
+      </div>
+      <div class="field"><label>Appetite <span class="mr">भूक</span></label><input type="text" name="appetite" placeholder="Less / Normal / Good"></div>
+      <div class="field"><label>Sleep <span class="mr">निद्रा</span></label>
+        <select name="sleep"><option value="">Select</option><option>Alpa (Less)</option><option>Adhik (Excess)</option><option>Bhrasht (Disturbed)</option><option>Samyak (Normal)</option><option>Divaswap (Daytime sleep)</option></select>
+      </div>
+      <div class="field"><label>Associated Pain <span class="mr">अनुषंगीन वेदना</span></label><input type="text" name="associatedPain"></div>
+      <div class="field"><label>Menstrual Disorder</label>
+        <select name="menstrualDisorder"><option value="">Select</option><option>Anartav (Amenorrhea)</option><option>Atyartav (Menorrhagia)</option><option>Shwetpradar (Leucorrhoea)</option><option>Kashtartav (Dysmenorrhea)</option><option>Rajonivrutti (Menopause)</option><option>None</option></select>
+      </div>
+    </div>
+    <div class="grid g4" style="margin-top:12px;">
+      <div class="field"><label>Tongue <span class="mr">जिव्हा</span></label>
+        <div class="check-row">
+          <label><input type="checkbox" name="tongueSaam"> Saam</label>
+          <label><input type="checkbox" name="tongueNiraam"> Niraam</label>
+        </div>
+      </div>
+      <div class="field"><label>Voice / Awaz <span class="mr">वाणी</span></label>
+        <select name="voice"><option value="">Select</option><option>Spashta (clear)</option><option>Asamyak</option><option>Vishesh</option></select>
+      </div>
+      <div class="field"><label>Skin/Nail/Eye Discolouration</label><input type="text" name="skinNailEye"></div>
+      <div class="field"><label>Body Temperature</label>
+        <select name="bodyTemp"><option value="">Select</option><option>Sama</option><option>Ushna</option><option>Sheeta</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRAKRUTI / PHYSICAL EXAM -->
+  <div class="card">
+    <h2>General &amp; Physical Examination <span class="mr">सामान्य परीक्षा</span></h2>
+    <div class="grid g4">
+      <div class="field"><label>Height</label><input type="text" name="height" placeholder="e.g. Tall / cm"></div>
+      <div class="field"><label>Weight (kg)</label><input type="number" name="weight"></div>
+      <div class="field"><label>BMI</label><input type="text" name="bmi"></div>
+      <div class="field"><label>BP</label><input type="text" name="bp" placeholder="mmHg"></div>
+      <div class="field"><label>Kostha <span class="mr">कोष्ठ</span></label>
+        <select name="kostha"><option value="">Select</option><option>Mrudu</option><option>Madhyam</option><option>Krura</option></select>
+      </div>
+      <div class="field"><label>Abdomen</label>
+        <select name="abdomen"><option value="">Select</option><option>Soft</option><option>Firm</option></select>
+      </div>
+      <div class="field"><label>Body Built (Dehkruti)</label><input type="text" name="dehkruti"></div>
+      <div class="field"><label>Vaishamya / Discolouration — Nail/Eye/Tongue</label><input type="text" name="vaishamya"></div>
+    </div>
+
+    <div class="subhead">Nadi Pariksha (Pulse) <span class="mr" style="font-weight:400;">नाडी परीक्षा</span></div>
+    <div class="pulse-grid">
+      <div class="field"><label>Gati (Movement)</label><input type="text" name="nadiGati" placeholder="e.g. 1½ pal"></div>
+      <div class="field"><label>Bal (Strength) / Vega</label><input type="text" name="nadiBal" placeholder="e.g. 3–4 vaar / 1 shwas"></div>
+      <div class="field"><label>Dosha Predominance</label><input type="text" name="nadiDosha" placeholder="e.g. Vata–Pitta"></div>
+      <div class="field"><label>Awasthi</label><input type="text" name="nadiAwasthi"></div>
+      <div class="field"><label>Rate (AP)</label><input type="text" name="nadiRate" placeholder="beats/min"></div>
+      <div class="field"><label>Rhythm (Dm/Pn)</label><input type="text" name="nadiRhythm"></div>
+    </div>
+  </div>
+
+  <!-- INVESTIGATION / DIAGNOSIS / TREATMENT -->
+  <div class="card">
+    <h2>Investigation, Diagnosis &amp; Treatment <span class="mr">तपासणी, निदान व चिकित्सा</span></h2>
+    <div class="field" style="margin-bottom:14px;">
+      <label>Investigations Advised <span class="mr">Investigation</span></label>
+      <textarea name="investigations" placeholder="e.g. Punarnavadi + Dashmuladi Kadha, Kishor Guggul, Sonf choorna"></textarea>
+    </div>
+    <div class="field" style="margin-bottom:14px;">
+      <label>Vyadhi Vinishchay — Diagnosis <span class="mr">व्याधीनिश्चय</span></label>
+      <textarea name="diagnosis"></textarea>
+    </div>
+    <div class="field" style="margin-bottom:14px;">
+      <label>Chikitsa Sutra — Treatment Principle <span class="mr">चिकित्सासूत्र</span></label>
+      <textarea name="chikitsaSutra"></textarea>
+    </div>
+    <div class="field">
+      <label>Advice <span class="mr">सल्ला (Adv)</span></label>
+      <textarea name="advice" placeholder="e.g. Panchakol Kadha, Ardrak Churna Yoga"></textarea>
+    </div>
+  </div>
+
+  <div class="signature-block">
+    <div>Patient / Attendant Signature<span></span></div>
+    <div>Physician Signature &amp; Seal<span></span></div>
+  </div>
+
+  <div class="footer-actions">
+    <button type="reset" class="btn-secondary">Clear Form</button>
+    <button type="submit" class="btn-primary">Save Case Paper</button>
+  </div>
+
+</form>
+
+<script>
+document.getElementById('caseForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  alert('Form captured. Connect this to your storage/backend to persist records.');
+});
+</script>
+</body>
+</html>

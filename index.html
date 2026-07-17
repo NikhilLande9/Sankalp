@@ -308,12 +308,10 @@
     <h2>Registration <span class="mr">नोंदणी</span></h2>
     <div class="grid g3">
       <div class="field">
-        <label>OPD No. <span class="mr">/ Indoor No.</span></label>
+        <label>OPD No. </label>
         <div class="grid g2" style="gap:10px;">
           <input type="text" name="opdNo" placeholder="OPD No.">
-          <input type="text" name="indoorNo" placeholder="Indoor No.">
         </div>
-        <input type="text" name="shastrakarma" placeholder="Shastrakarma — शस्त्रकर्म (surgical procedure, if any)" style="margin-top:8px;">
       </div>
       <div class="field">
         <label>Prognosis <span class="mr">साध्य / असाध्य</span></label>
@@ -348,15 +346,23 @@
       <div class="field"><label>Phone No. <span class="mr">फोन नं.</span></label><input type="tel" name="phone"></div>
 
       <div class="field"><label>Occupation <span class="mr">व्यवसाय</span></label><input type="text" name="occupation"></div>
-      <div class="field"><label>C/o (Care of) <span class="mr">काळजीवाहू</span></label><input type="text" name="careOf"></div>
+      <div class="field"><label>Gaon <span class="mr">गाव</span></label><input type="text" name="Gaon"></div>
       <div class="field" style="grid-column: span 2;"><label>Address <span class="mr">पत्ता</span></label><input type="text" name="address"></div>
     </div>
 
-    <div class="subhead">Marital / Reproductive <span class="mr" style="font-weight:400;">वैवाहिक</span></div>
+    <div class="subhead">Marital <span class="mr" style="font-weight:400;">वैवाहिक</span></div>
     <div class="grid g4">
-      <div class="field"><label>Marital Status <span class="mr">विवाहित/अविवाहित</span></label>
-        <select name="maritalStatus"><option value="">Select</option><option>Married</option><option>Unmarried</option></select>
-      </div>
+      <div class="field">
+  <label>Marital Status <span class="mr">विवाहित/अविवाहित</span></label>  
+    <div class="radio-group">
+      <label>
+        <input type="radio" name="maritalStatus" value="Married"> Married
+      </label>
+      <label>
+        <input type="radio" name="maritalStatus" value="Unmarried"> Unmarried
+      </label>
+    </div>
+  </div>
       <div class="field"><label>Years Married <span class="mr">विवाह वर्ष</span></label><input type="number" name="yearsMarried"></div>
       <div class="field"><label>Total Children <span class="mr">अपत्य एकूण</span></label><input type="number" name="totalChildren"></div>
     </div>
@@ -425,9 +431,7 @@
       <div class="field"><label>P/M/H — Past Medical History</label><input type="text" name="pmh"></div>
       <div class="field"><label>P/S/H — Past Surgical History</label><input type="text" name="psh" placeholder="e.g. LSCS – 2019, T.L. – 2017"></div>
       <div class="field"><label>H/O Allergy</label><input type="text" name="allergy"></div>
-      <div class="field"><label>H/O Hypertension <span class="mr">H/o. Hypetension</span></label>
-        <div class="radio-row"><label><input type="radio" name="hoHTN" value="yes"> Yes</label><label><input type="radio" name="hoHTN" value="no"> No</label></div>
-      </div>
+      
       <div class="field"><label>H/O D.M. <span class="mr">मधुमेह</span></label>
         <div class="radio-row"><label><input type="radio" name="hoDM" value="yes"> Yes</label><label><input type="radio" name="hoDM" value="no"> No</label></div>
       </div>
@@ -574,6 +578,8 @@
       <div class="field"><label>Awasthi</label><input type="text" name="nadiAwasthi"></div>
       <div class="field"><label>Rate (AP)</label><input type="text" name="nadiRate" placeholder="beats/min"></div>
       <div class="field"><label>Rhythm (Dm/Pn)</label><input type="text" name="nadiRhythm"></div>
+      <div class="field"><label>Dhatu</label><input type="text" name="nadiDhatu"></div>
+      <div class="field"><label>Mal</label><input type="text" name="nadiMal"></div>
     </div>
   </div>
 
